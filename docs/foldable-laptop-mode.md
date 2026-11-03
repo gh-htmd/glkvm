@@ -153,12 +153,33 @@ So rule 3 is a *candidate* state, not proof of a fold:
 
 ## Deploying to a GLKVM device
 
-This repo is the KVMD source; the device sync script is
-`apply_to_glkvm.sh` (same LAN as the device, then restart the device).
-The web files are served from the device's KVMD install, so after
-syncing, hard-refresh Safari on the Duo (the JS/CSS are module/static
-files, not versioned) and check System → Web UI settings for the two
-new switches.
+This repo is the KVMD source, not a firmware image: nothing here can
+build the device's signed `update.img`, and the device's built-in
+Upgrade UI (which fetches official firmware from
+`fw.gl-inet.com` and verifies its signature in
+`kvmd/apps/kvmd/api/upgrade.py`) will not install a custom release.
+What the GitHub release ships instead is a **webapp-only patch
+tarball** (the changed files under `web/` plus
+`scripts/install-webapp-update.sh` as `install.sh`), because this
+feature touches only static web files.
+
+On the device, as root, from the extracted tarball:
+
+```
+./install.sh
+```
+
+The script backs the whole served web tree up first (printing the
+backup path), copies the five changed files together into
+`/usr/share/kvmd/web`, verifies them, and finishes — no restart
+needed, just reload the KVM page and check System → Web UI settings
+for the two new switches. If `/usr/share/kvmd/web` is not writable,
+remount it read-write first (see your `mount` output for which
+filesystem holds it); if the path itself differs on your firmware,
+re-run with `WEB_ROOT=<actual path> ./install.sh`.
+
+Do not use `apply_to_glkvm.sh` for this: it syncs only the Python
+`kvmd/` package (deleting the target first) and never touches `web/`.
 
 ## Regenerating the HTML
 
