@@ -1,0 +1,88 @@
+// Foldable laptop-mode keyboard panel for the iPhone Duo.
+//
+// This is NOT a window (no .window class, so the window manager ignores
+// it) and it is NOT the built-in #keyboard-window. It is a fixed panel
+// that fold.css shows only under body.fold-laptop, in the lower half of
+// the viewport, with the remote stream in the upper half.
+//
+// Keys use data-fold-code (not data-code) so Keypad, which scans only
+// #keyboard-window, never binds them twice. fold.js binds them and
+// forwards every press/release through Hid.emitKey(), i.e. through the
+// exact same HID path as the built-in keyboard. There are no <input>
+// elements anywhere in this panel, so Safari's native keyboard cannot
+// open from it. Modifiers are sticky: tap once to hold for the next
+// key, twice quickly to lock.
+
+mixin foldkey(code, classes="")
+	button.fold-key(type="button" tabindex="-1" data-fold-code=code class=classes)
+		block
+
+#fold-keyboard
+	#fold-hinge(title="Display crease")
+	#fold-toolbar
+		span.fold-title Laptop mode &middot; top: remote screen &middot; bottom: keyboard
+		button#fold-nav-button(type="button" aria-pressed="false") Nav
+		button#fold-exit-button(type="button") Exit
+	#fold-rows
+		// Fn row / Nav row: only one visible at a time (fold.js swaps).
+		.fold-row.fold-row-visible#fold-row-fn
+			+foldkey("Escape", "small") Esc
+			each key in ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
+				+foldkey(key, "small") #{key}
+		.fold-row#fold-row-nav
+			+foldkey("Insert", "small") Ins
+			+foldkey("Home", "small") Home
+			+foldkey("PageUp", "small") PgUp
+			+foldkey("Delete", "small") Del
+			+foldkey("End", "small") End
+			+foldkey("PageDown", "small") PgDn
+			+foldkey("PrintScreen", "small") Pt/Sq
+			+foldkey("ScrollLock", "small") ScrLk
+			+foldkey("Pause", "small") P/Brk
+			+foldkey("ArrowUp") &uarr;
+			+foldkey("ArrowLeft") &larr;
+			+foldkey("ArrowDown") &darr;
+			+foldkey("ArrowRight") &rarr;
+		.fold-row
+			+foldkey("Backquote") ~#[br]`
+			each key, index in ["!", "@", "#", "$", "%", "^", "&", "*", "("]
+				+foldkey(`Digit${index + 1}`) #{key}#[br]#{index + 1}
+			+foldkey("Digit0") )#[br]0
+			+foldkey("Minus") _#[br]-
+			+foldkey("Equal") +#[br]=
+			+foldkey("Backspace", "wide") &#8612;
+		.fold-row
+			+foldkey("Tab", "wide") Tab
+			each key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
+				+foldkey(`Key${key}`) #{key}
+			+foldkey("BracketLeft") {#[br][
+			+foldkey("BracketRight") }#[br]]
+			+foldkey("Backslash") |#[br]&bsol;
+		.fold-row
+			+foldkey("CapsLock", "wide small") Caps
+			each key in ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
+				+foldkey(`Key${key}`) #{key}
+			+foldkey("Semicolon") :#[br];
+			+foldkey("Quote") "#[br]'
+			+foldkey("Enter", "wide small") Enter
+		.fold-row
+			+foldkey("ShiftLeft", "wide small") Shift
+			each key in ["Z", "X", "C", "V", "B", "N", "M"]
+				+foldkey(`Key${key}`) #{key}
+			+foldkey("Comma") &lt;#[br],
+			+foldkey("Period") &gt;#[br].
+			+foldkey("Slash") ?#[br]/
+			+foldkey("ShiftRight", "wide small") Shift
+			+foldkey("ArrowUp") &uarr;
+		.fold-row
+			+foldkey("ControlLeft", "small") Ctrl
+			+foldkey("MetaLeft", "small") Win
+			+foldkey("AltLeft", "small") Alt
+			+foldkey("Space", "widest")
+			+foldkey("AltRight", "small") Alt
+			+foldkey("MetaRight", "small") Win
+			+foldkey("ContextMenu", "small") Menu
+			+foldkey("ControlRight", "small") Ctrl
+			+foldkey("ArrowLeft") &larr;
+			+foldkey("ArrowDown") &darr;
+			+foldkey("ArrowRight") &rarr;

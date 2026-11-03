@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="../share/css/kvm/system.css">
     <link rel="stylesheet" href="../share/css/kvm/keyboard.css">
     <link rel="stylesheet" href="../share/css/kvm/about.css">
+    <link rel="stylesheet" href="../share/css/kvm/fold.css">
     <link rel="stylesheet" href="../share/css/user.css">
     <script type="module">import {setRootPrefix} from "../share/js/vars.js";
       setRootPrefix("../");
@@ -457,6 +458,26 @@
                             <div class="switch-box">
                               <input type="checkbox" id="page-full-tab-stream-switch">
                               <label for="page-full-tab-stream-switch"><span class="switch-inner"></span><span class="switch"></span></label>
+                            </div>
+                          </td>
+                    </tr>
+                    <tr>
+                          <td>Foldable laptop mode (split screen + keyboard):
+                          </td>
+                          <td align="right">
+                            <div class="switch-box">
+                              <input type="checkbox" id="fold-laptop-switch">
+                              <label for="fold-laptop-switch"><span class="switch-inner"></span><span class="switch"></span></label>
+                            </div>
+                          </td>
+                    </tr>
+                    <tr>
+                          <td>Auto-detect foldable laptop layout:
+                          </td>
+                          <td align="right">
+                            <div class="switch-box">
+                              <input type="checkbox" id="fold-auto-switch">
+                              <label for="fold-auto-switch"><span class="switch-inner"></span><span class="switch"></span></label>
                             </div>
                           </td>
                     </tr>
@@ -3037,6 +3058,22 @@
         </div>
       </div>
       <iframe id="webterm-iframe" src="" style="width: 100%; flex: 1"></iframe>
+    </div>
+    <div id="fold-keyboard">
+      <div id="fold-hinge" title="Display crease"></div>
+      <div id="fold-toolbar"><span class="fold-title">Laptop mode &middot; top: remote screen &middot; bottom: keyboard</span>
+        <button id="fold-nav-button" type="button" aria-pressed="false">Nav</button>
+        <button id="fold-exit-button" type="button">Exit</button>
+      </div>
+      <div id="fold-rows">
+        <div class="fold-row fold-row-visible" id="fold-row-fn"><button class="fold-key small" type="button" tabindex="-1" data-fold-code="Escape">Esc</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F1">F1</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F2">F2</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F3">F3</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F4">F4</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F5">F5</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F6">F6</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F7">F7</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F8">F8</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F9">F9</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F10">F10</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F11">F11</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="F12">F12</button></div>
+        <div class="fold-row" id="fold-row-nav"><button class="fold-key small" type="button" tabindex="-1" data-fold-code="Insert">Ins</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="Home">Home</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="PageUp">PgUp</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="Delete">Del</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="End">End</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="PageDown">PgDn</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="PrintScreen">Pt/Sq</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="ScrollLock">ScrLk</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="Pause">P/Brk</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowUp">&uarr;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowLeft">&larr;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowDown">&darr;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowRight">&rarr;</button></div>
+        <div class="fold-row"><button class="fold-key" type="button" tabindex="-1" data-fold-code="Backquote">~<br>`</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit1">!<br>1</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit2">@<br>2</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit3">#<br>3</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit4">$<br>4</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit5">%<br>5</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit6">^<br>6</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit7">&amp;<br>7</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit8">*<br>8</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit9">(<br>9</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Digit0">)<br>0</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Minus">_<br>-</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Equal">+<br>=</button><button class="fold-key wide" type="button" tabindex="-1" data-fold-code="Backspace">&#8612;</button></div>
+        <div class="fold-row"><button class="fold-key wide" type="button" tabindex="-1" data-fold-code="Tab">Tab</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyQ">Q</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyW">W</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyE">E</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyR">R</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyT">T</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyY">Y</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyU">U</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyI">I</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyO">O</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyP">P</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="BracketLeft">{<br>[</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="BracketRight">}<br>]</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Backslash">|<br>&bsol;</button></div>
+        <div class="fold-row"><button class="fold-key wide small" type="button" tabindex="-1" data-fold-code="CapsLock">Caps</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyA">A</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyS">S</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyD">D</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyF">F</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyG">G</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyH">H</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyJ">J</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyK">K</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyL">L</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Semicolon">:<br>;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Quote">"<br>'</button><button class="fold-key wide small" type="button" tabindex="-1" data-fold-code="Enter">Enter</button></div>
+        <div class="fold-row"><button class="fold-key wide small" type="button" tabindex="-1" data-fold-code="ShiftLeft">Shift</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyZ">Z</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyX">X</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyC">C</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyV">V</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyB">B</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyN">N</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="KeyM">M</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Comma">&lt;<br>,</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Period">&gt;<br>.</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="Slash">?<br>/</button><button class="fold-key wide small" type="button" tabindex="-1" data-fold-code="ShiftRight">Shift</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowUp">&uarr;</button></div>
+        <div class="fold-row"><button class="fold-key small" type="button" tabindex="-1" data-fold-code="ControlLeft">Ctrl</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="MetaLeft">Win</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="AltLeft">Alt</button><button class="fold-key widest" type="button" tabindex="-1" data-fold-code="Space"></button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="AltRight">Alt</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="MetaRight">Win</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="ContextMenu">Menu</button><button class="fold-key small" type="button" tabindex="-1" data-fold-code="ControlRight">Ctrl</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowLeft">&larr;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowDown">&darr;</button><button class="fold-key" type="button" tabindex="-1" data-fold-code="ArrowRight">&rarr;</button></div>
+      </div>
     </div>
     <ul class="navbar-bg-tips">
       <li class="left">
