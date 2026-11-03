@@ -29,6 +29,7 @@ import {wm} from "../wm.js";
 import {Info} from "./info.js";
 import {Recorder} from "./recorder.js";
 import {Hid} from "./hid.js";
+import {FoldSplit} from "./fold.js";
 import {Paste} from "./paste.js";
 import {Atx} from "./atx.js";
 import {Msd} from "./msd.js";
@@ -52,6 +53,12 @@ export function Session() {
 	var __streamer = new Streamer();
 	var __recorder = new Recorder();
 	var __hid = new Hid(__streamer.getGeometry, __recorder);
+	// Foldable laptop mode: split stream/keyboard panel, keys via Hid.
+	// Constructed after Hid so emitKey() is available; the constructor
+	// registers its own listeners and the module stays inert (no body
+	// class, panel hidden) until detection or the manual switch
+	// activates it, so other devices are unaffected.
+	new FoldSplit((code, state) => __hid.emitKey(code, state));
 	var __paste = new Paste(__recorder);
 	var __atx = new Atx(__recorder);
 	var __msd = new Msd();

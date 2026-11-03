@@ -94,6 +94,15 @@ export function Hid(__getGeometry, __recorder) {
 		__mouse.setSocket(ws);
 	};
 
+	// Foldable laptop-mode keyboard (fold.js) sends keys through this,
+	// i.e. through Keyboard.emit() and the existing HID WebSocket path.
+	// It is a no-op for codes the built-in keypad does not know, exactly
+	// like Keyboard.emit() itself (Keypad only maps codes present in
+	// #keyboard-window), so the fold panel cannot invent a new key code.
+	self.emitKey = function(code, state) {
+		__keyboard.emit(code, state);
+	};
+
 	self.setState = function(state) {
 		if (state) {
 			if (!__state) {
